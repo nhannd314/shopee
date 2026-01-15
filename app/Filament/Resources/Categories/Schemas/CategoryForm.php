@@ -14,7 +14,8 @@ class CategoryForm
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('slug')
-                    ->required(),
+                    ->disabled()
+                    ->dehydrated(false),
                 TextInput::make('parent_id')
                     ->numeric(),
             ]);
