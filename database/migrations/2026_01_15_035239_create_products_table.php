@@ -19,7 +19,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 15, 2); // Giá gốc khi chưa có biến thể
             $table->decimal('sale_price', 15, 2); // Giá gốc khi chưa có biến thể
-            //$table->string('image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

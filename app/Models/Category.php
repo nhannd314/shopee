@@ -6,11 +6,11 @@ use App\Helpers\SlugHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Category extends Model implements \Spatie\MediaLibrary\HasMedia
 {
-    use SoftDeletes;
+    use SoftDeletes, \Spatie\MediaLibrary\InteractsWithMedia;
 
-    protected $fillable = ['name', 'slug', 'description', 'parent_id'];
+    protected $fillable = ['name', 'slug', 'description'];
 
     protected static function booted()
     {

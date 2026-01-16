@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained();
-            $table->integer('quantity');
-            $table->decimal('price', 15, 2); // Lưu giá tại thời điểm mua
+            $table->string('key');
+            $table->string('value');
+            $table->string('type')->default('text');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('options');
     }
 };

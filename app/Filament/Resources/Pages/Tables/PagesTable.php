@@ -1,33 +1,23 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Tables;
+namespace App\Filament\Resources\Pages\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class CategoriesTable
+class PagesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('title')
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
-//                TextColumn::make('parent_id')
-//                    ->numeric()
-//                    ->sortable(),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -38,7 +28,7 @@ class CategoriesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->recordActions([
                 EditAction::make(),
@@ -46,8 +36,6 @@ class CategoriesTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
