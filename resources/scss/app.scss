@@ -12,6 +12,11 @@ $link-decoration: none;
 $light-border: #dee2e6;
 $gap: 18px;
 $bg-color: #f5f5f5;
+$border-radius: 2px;
+$gray-text: #888;
+.text-right {
+    text-align: right;
+}
 
 .gap {
     margin-bottom: $gap;
@@ -36,6 +41,7 @@ header {
     }
     .top-bar {
         padding: 5px 0;
+        margin-bottom: 10px;
         a {
             display: inline-block;
             padding: 0 5px;
@@ -45,7 +51,7 @@ header {
         }
     }
     .header-main {
-        padding-top: 15px;
+        padding-top: 5px;
         .logo-wrapper {
             flex: 0 0 200px;
             padding-right: 60px;
@@ -77,6 +83,7 @@ header {
             flex: 0 0 auto;
             padding-left: 30px;
             .cart-link {
+                transition: all 0.3s ease;
                 i {
                     font-size: 1.5em;
                 }
@@ -107,20 +114,43 @@ header {
         }
     }
 }
+header.is-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    .header-main {
+        padding-bottom: 5px;
+    }
+    .top-bar, .header-bottom { display: none !important; }
+}
+/* Khoảng đệm để tránh giật trang */
+#header-spacer {
+    display: none;
+}
+#site-header.is-sticky + #header-spacer {
+    display: block;
+}
+
 main {
     background: $bg-color;
-    padding: $gap 0;
+    padding: $gap 0 $gap * 2;
+}
+#main-slide {
+    margin-bottom: $gap;
 }
 .main-section {
     background: #fff;
     margin-bottom: $gap;
     border-radius: 1px;
-    .main-title {
-        font-size: 1.25em;
-        font-weight: 500;
-        padding: 13px 16px;
-        margin: 0;
-    }
+}
+.main-title {
+    font-size: 1.3em;
+    font-weight: 500;
+    padding: 13px 16px;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .list-categories {
@@ -147,4 +177,179 @@ main {
             }
         }
     }
+}
+.g-custom {
+    --bs-gutter-x: 10px;
+    --bs-gutter-y: 10px;
+}
+.products {
+    .row {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .item {
+        .wrapper {
+            border: solid 1px $light-border;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 2px;
+            transition: all 0.2s;
+            .img-wrapper {
+                position: relative;
+                .sale-badge {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    background: $blue-400;
+                    color: #fff;
+                    padding: 2px 5px;
+                    font-size: 0.9em;
+                    border-radius: 2px;
+                }
+            }
+            img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                margin-bottom: 10px;
+            }
+            .title {
+                font-weight: normal;
+                font-size: 1em;
+                color: $body-color;
+            }
+            .price {
+                margin-bottom: 7px;
+                .sale {
+                    color: $primary;
+                    font-weight: 600;
+                    margin-right: 5px;
+                    font-size: 1.05em;
+                }
+                .regular {
+                    color: $gray-text;
+                    text-decoration: line-through;
+                    font-size: 0.9em;
+                }
+            }
+            &:hover {
+                border-color: $primary;
+                .title {
+                    color: $primary;
+                }
+            }
+        }
+    }
+}
+.benefit-wrapper {
+    background: #fff;
+    padding: $gap 0;
+    .benefit-item {
+        text-align: center;
+        img {
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 1.2em;
+        }
+    }
+}
+footer {
+    padding: $gap 0;
+    background: $bg-color;
+    a {
+        color: $gray-text;
+        &:hover {
+            color: $primary;
+        }
+    }
+    .widget {
+        .title {
+            font-weight: 500;
+            font-size: 1.1em;
+            margin-bottom: $gap;
+            margin-top: $gap;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            li {
+                margin-bottom: 5px;
+                a {
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+.footer-bottom {
+    .container .wrapper {
+        padding-top: $gap;
+        border-top: solid 1px $light-border;
+    }
+}
+
+.single-product {
+    .quantity-wrapper {
+        input, button {
+            border: 1px solid $light-border;
+            width: 35px;
+            height: 35px;
+            line-height: 1;
+            background: #fff;
+        }
+        button:active {
+            background: $gray-200;
+        }
+    }
+    #quantity {
+        width: 50px;
+    }
+    .add-to-cart {
+        padding: 8px 15px;
+        font-size: 1.1em;
+    }
+}
+/* Ẩn cho Chrome, Safari, Edge, Opera */
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Ẩn cho Firefox */
+.no-spinners {
+    -moz-appearance: textfield;
+}
+
+/* Tùy chỉnh thêm để input trông đẹp hơn */
+#quantity {
+    border-left: none;
+    border-right: none;
+    box-shadow: none; /* Bỏ viền xanh khi click vào */
+}
+
+.flying-img {
+    position: absolute;
+    z-index: 9999;
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.42, 0, 0.58, 1); /* Đường cong di chuyển mượt */
+    border-radius: 50%; /* Có thể bo tròn ảnh khi bay */
+    width: 100px; height: 100px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+/* Hiệu ứng rung nhẹ */
+@keyframes cart-shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px) rotate(-5deg); }
+    50% { transform: translateX(3px) rotate(5deg); }
+    75% { transform: translateX(-3px) rotate(-5deg); }
+    100% { transform: translateX(0); }
+}
+
+.animate-cart {
+    animation: cart-shake 0.4s ease-in-out;
+    color: $red-100; /* Có thể đổi màu icon nhẹ khi rung để gây chú ý */
 }

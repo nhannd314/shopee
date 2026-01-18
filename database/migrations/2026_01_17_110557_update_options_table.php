@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->unsignedInteger('sold_count')->default(0)->index();
-            $table->integer('rank')->default(0)->index();
+        Schema::table('options', function (Blueprint $table) {
+            // Thêm cột name kiểu string, cho phép null hoặc đặt sau một cột cụ thể
+            $table->string('name')->nullable();
         });
     }
 
@@ -22,10 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('options', function (Blueprint $table) {
             // Xóa cột name nếu rollback migration
-            $table->dropColumn('sold_count');
-            $table->dropColumn('rank');
+            $table->dropColumn('name');
         });
     }
 };

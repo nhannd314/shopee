@@ -53,7 +53,6 @@ class ProductForm
                     ->numeric()
                     ->prefix('VND'),
                 TextInput::make('sale_price')
-                    ->required()
                     ->numeric()
                     ->prefix('VND'),
 

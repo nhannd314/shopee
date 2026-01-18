@@ -1,4 +1,4 @@
-<header class="">
+<header id="site-header" class="">
     <div class="container">
         <div class="top-bar d-flex justify-content-between align-items-center">
             <div class="top-bar-left">
@@ -18,7 +18,7 @@
 
         <div class="header-main d-flex justify-content-between align-items-center">
             <div class="logo-wrapper">
-                <a href="#" class="logo">
+                <a href="{{ route('home') }}" class="logo">
                     <img src="{{ asset('img/logo-kmax.png') }}" alt="Siêu thị mini KMax">
                 </a>
             </div>
@@ -30,9 +30,11 @@
                 </button>
             </div>
             <div class="cart-wrapper">
-                <a href="#" class="cart-link">
+                <a href="{{ route('cart.index') }}" class="cart-link d-inline-block">
                     <i class="fas fa-cart-shopping"></i>
-                    <span class="cart-badge">13</span>
+                    <span class="cart-badge">
+                        {{ session('cart') ? collect(session('cart'))->sum('quantity') : 0 }}
+                    </span>
                 </a>
             </div>
         </div>
@@ -43,3 +45,4 @@
         </div>
     </div>
 </header>
+<div id="header-spacer"></div>

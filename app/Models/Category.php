@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Helpers\SlugHelper;
+use Hamcrest\Core\AllOf;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model implements \Spatie\MediaLibrary\HasMedia
@@ -19,5 +21,10 @@ class Category extends Model implements \Spatie\MediaLibrary\HasMedia
                 $category->slug = SlugHelper::generateUniqueSlug(self::class, $category->name);
             }
         });
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }

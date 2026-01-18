@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedInteger('sold_count')->default(0)->index();
-            $table->integer('rank')->default(0)->index();
+            $table->decimal('sale_price', 15, 2)->nullable()->change();
         });
     }
 
@@ -23,9 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            // Xóa cột name nếu rollback migration
-            $table->dropColumn('sold_count');
-            $table->dropColumn('rank');
+            $table->decimal('sale_price', 15, 2)->nullable(false)->change();
         });
     }
 };
