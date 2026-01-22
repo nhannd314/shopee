@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -16,7 +17,7 @@ class ProductsImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
-        $categoryName = trim($row['category']);
+        $categoryName = Str::ucfirst(Str::lower(trim($row['category'])));
         $category = Category::firstOrCreate(['name' => $categoryName]);
 
         return new Product([
