@@ -75,7 +75,7 @@ class Product extends Model implements HasMedia
 
     public function getSalePercentAttribute(): string
     {
-        return $this->sale_price ? round(($this->price-$this->sale_price)*100/$this->price) : '';
+        return $this->sale_price && $this->price > 0 ? round(($this->price-$this->sale_price)*100/$this->price) : '';
     }
 
     protected function formatPrice($price): string
