@@ -11,7 +11,7 @@ class ProductController extends Controller
     // Show products in category
     public function category(Category $category)
     {
-        $products = $category->products()->with('featuredImage')->paginate(60)->withQueryString();
+        $products = $category->products()->with('featuredImage')->paginate(config('app.pagination'))->withQueryString();
         $breadcrumb = [
             ['label' => $category->name]
         ];

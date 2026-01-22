@@ -48,6 +48,10 @@ class ProductForm
                     ->extraAttributes([
                         'style' => 'min-height: 300px;', // Cách viết trực tiếp bằng CSS
                     ]),
+                TextInput::make('sku'),
+                TextInput::make('cost_price')
+                    ->numeric()
+                    ->prefix('VND'),
                 TextInput::make('price')
                     ->required()
                     ->numeric()
@@ -55,6 +59,12 @@ class ProductForm
                 TextInput::make('sale_price')
                     ->numeric()
                     ->prefix('VND'),
+                TextInput::make('stock')
+                    ->numeric(),
+                TextInput::make('sold_count')
+                    ->numeric(),
+                TextInput::make('rank')
+                    ->numeric(),
 
             ]);
     }

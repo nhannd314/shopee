@@ -2,50 +2,29 @@ import './bootstrap';
 import 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', function () {
-    /**
-     * Sticky header
-     */
-    const header = document.getElementById('site-header');
-    const spacer = document.getElementById('header-spacer');
-    const topBar = document.querySelector('.top-bar');
+    if (window.innerWidth >= 992) {
+        /**
+         * Sticky header
+         */
+        const header = document.getElementById('site-header');
+        const spacer = document.getElementById('header-spacer');
+        const topBar = document.querySelector('.top-bar');
 
-    // Lấy chiều cao của top-bar để biết khi nào bắt đầu dính
-    const stickyThreshold = topBar ? topBar.offsetHeight : 100;
+        // Lấy chiều cao của top-bar để biết khi nào bắt đầu dính
+        const stickyThreshold = topBar ? topBar.offsetHeight : 100;
 
-    // Thiết lập chiều cao cho spacer bằng đúng chiều cao header để tránh giật
-    if (spacer) {
-        spacer.style.height = header.offsetHeight + 'px';
-    }
-
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > stickyThreshold) {
-            header.classList.add('is-sticky');
-        } else {
-            header.classList.remove('is-sticky');
+        // Thiết lập chiều cao cho spacer bằng đúng chiều cao header để tránh giật
+        if (spacer) {
+            spacer.style.height = header.offsetHeight + 'px';
         }
-    });
 
-    /**
-     * Button tang giam so luong dat hang
-     */
-    const qtyInput = document.getElementById('quantity');
-    const btnMinus = document.getElementById('btn-minus');
-    const btnPlus = document.getElementById('btn-plus');
-
-    if (btnMinus && btnPlus && qtyInput) {
-        btnMinus.addEventListener('click', function() {
-            updateQty(-1);
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > stickyThreshold) {
+                header.classList.add('is-sticky');
+            } else {
+                header.classList.remove('is-sticky');
+            }
         });
-
-        btnPlus.addEventListener('click', function() {
-            updateQty(1);
-        });
-    }
-
-    function updateQty(step) {
-        let currentValue = parseInt(qtyInput.value) || 1;
-        let newValue = currentValue + step;
-        qtyInput.value = newValue < 1 ? 1 : newValue;
     }
 
     /**
@@ -86,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
-                            // Cập nhật số lượng giỏ hàng trên Header (nếu có)
+                            // Cập nhật số lượng trong giỏ hàng
                             const cartBadge = document.querySelector('.cart-badge');
                             if (cartBadge) cartBadge.innerText = data.cart_count;
 
@@ -150,56 +129,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * Update trong giỏ hàng
+     * Update quantity
      */
     document.addEventListener('click', function(e) {
-        // Xử lý nút tăng giảm số lượng
-        if (e.target.classList.contains('update-cart')) {
-            const row = e.target.closest('tr');
-            const id = row.getAttribute('data-id');
-            const type = e.target.getAttribute('data-type');
-            const qtyInput = row.querySelector('.qty-input');
-
-            let newQty = parseInt(qtyInput.value);
-            newQty = (type === 'plus') ? newQty + 1 : newQty - 1;
-
-            if (newQty >= 1) {
-                updateCartAjax(id, newQty, row);
+        if (e.target.classList.contains('decrease-quantity')) {
+            const quantityInput = e.target.nextElementSibling;
+            if (quantityInput.value !== '1') {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+                // Ra lệnh cho input phát ra sự kiện 'change'
+                quantityInput.dispatchEvent(new Event('change', { bubbles: true }));
             }
         }
-
-        // Xử lý nút xóa sản phẩm
-        if (e.target.closest('.remove-from-cart')) {
-            const row = e.target.closest('tr');
-            const id = row.getAttribute('data-id');
-            if (confirm('Bạn muốn xóa sản phẩm này?')) {
-                updateCartAjax(id, 0, row); // Gửi 0 để xóa
-            }
+        if (e.target.classList.contains('increase-quantity')) {
+            const quantityInput = e.target.previousElementSibling;
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            quantityInput.dispatchEvent(new Event('change', { bubbles: true }));
         }
-    });
-
-    function updateCartAjax(id, quantity, row) {
-        fetch('/update-cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({ id: id, quantity: quantity })
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (quantity === 0) {
-                    row.remove();
-                    if (document.querySelectorAll('tbody tr').length === 0) location.reload();
-                } else {
-                    row.querySelector('.qty-input').value = quantity;
-                    row.querySelector('.subtotal').innerText = data.subtotal + 'đ';
-                }
-
-                // Cập nhật tất cả các vị trí hiển thị tổng tiền
-                document.querySelectorAll('.total-price').forEach(el => el.innerText = data.total + 'đ');
-                document.querySelector('.cart-badge').innerText = data.count;
-            });
-    }
+    })
 });

@@ -7,14 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Product extends Model implements HasMedia
 {
     use SoftDeletes, InteractsWithMedia;
 
-    protected $fillable = ['name', 'slug', 'description', 'category_id', 'price', 'sale_price'];
+    protected $fillable = ['name', 'slug', 'sku', 'description', 'category_id', 'price', 'sale_price', 'cost_price'];
+
+    // Định nghĩa các bản thu nhỏ tại đây
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->fit(Fit::Contain, 200, 200) // Cắt ảnh vừa khung 300x300
+            ->nonQueued(); // Chạy trực tiếp, không chờ Queue (nếu ảnh ít)
+    }
 
     public function category(): BelongsTo
     {
@@ -45,13 +55,14 @@ class Product extends Model implements HasMedia
         // Nếu đã nạp thì lấy từ bộ nhớ, nếu chưa thì thực hiện truy vấn (Lazy Load)
         $media = $this->getRelationValue('featuredImage') ?: $this->featuredImage()->first();
 
-        return $media ? $media->getUrl() : asset('img/default-product.jpg');
+        return $media ? $media->getUrl('thumb') : asset('img/default-product.jpg');
     }
 
-    protected function formatPrice($price): string
+    public function getRealPriceAttribute()
     {
-        return number_format($price, 0, '.', ',') . 'đ';
+        return $this->sale_price ?? $this->price;
     }
+
     public function getFormattedPriceAttribute(): string
     {
         return $this->sale_price ? $this->formatPrice($this->sale_price) : $this->formatPrice($this->price);
@@ -65,5 +76,10 @@ class Product extends Model implements HasMedia
     public function getSalePercentAttribute(): string
     {
         return $this->sale_price ? round(($this->price-$this->sale_price)*100/$this->price) : '';
+    }
+
+    protected function formatPrice($price): string
+    {
+        return number_format($price, 0, '.', ',') . 'đ';
     }
 }

@@ -17,8 +17,7 @@
 
     <!-- Styles / Scripts -->
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-
-    @stack('styles') {{-- Để nạp thêm CSS riêng cho từng trang --}}
+    @yield('scripts')
 
 </head>
 <body class="">
@@ -30,8 +29,6 @@
 </main>
 
 @include('partials.footer') {{-- Nạp Footer --}}
-
-@stack('scripts') {{-- Để nạp thêm JS riêng cho từng trang --}}
 
 </body>
 </html>

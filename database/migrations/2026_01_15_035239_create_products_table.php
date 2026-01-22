@@ -16,9 +16,15 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('sku')->nullable();
+            $table->integer('stock')->default(0);
             $table->text('description')->nullable();
-            $table->decimal('price', 15, 2); // Giá gốc khi chưa có biến thể
-            $table->decimal('sale_price', 15, 2); // Giá gốc khi chưa có biến thể
+            $table->decimal('cost_price', 15, 2)->nullable();
+            $table->decimal('price', 15, 2)->nullable(); // Giá gốc khi chưa có biến thể
+            $table->decimal('sale_price', 15, 2)->nullable(); // Giá gốc khi chưa có biến thể
+            $table->boolean('is_featured')->default(false);
+            $table->unsignedInteger('sold_count')->default(0)->index();
+            $table->integer('rank')->default(0)->index();
             $table->softDeletes();
             $table->timestamps();
         });

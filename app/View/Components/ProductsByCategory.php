@@ -23,7 +23,11 @@ class ProductsByCategory extends Component
     public function render(): View|Closure|string
     {
         $ids = explode(',', $this->cat);
-        $products = Product::whereIn('category_id', $ids)->with('featuredImage')->latest()->take($this->limit)->get();
+        $products = Product::whereIn('category_id', $ids)
+            ->with('featuredImage')
+            ->latest()
+            ->take($this->limit)
+            ->get();
         return view('components.products-by-category', [
             'products' => $products,
             'title' => $this->title

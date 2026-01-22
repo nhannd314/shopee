@@ -90,6 +90,7 @@ header {
                 .cart-badge {
                     position: relative;
                     top: -12px;
+                    right: 7px;
                     background: #fff;
                     color: $primary;
                     border-radius: 10px;
@@ -125,6 +126,29 @@ header.is-sticky {
     }
     .top-bar, .header-bottom { display: none !important; }
 }
+@media (max-width: 991px) {
+    body {
+        padding-top: 30px;
+        font-size: 13px;
+    }
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        padding-bottom: 5px;
+        .header-main {
+            .logo-wrapper {
+                flex: 0 0 100px;
+                padding-right: 10px;
+            }
+            .cart-wrapper {
+                padding-left: 10px;
+            }
+        }
+    }
+}
 /* Khoảng đệm để tránh giật trang */
 #header-spacer {
     display: none;
@@ -140,17 +164,29 @@ main {
 #main-slide {
     margin-bottom: $gap;
 }
+.main-title {
+    font-size: 1.3em;
+    font-weight: 500;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin: 0;
+    text-transform: uppercase;
+}
+@media (max-width: 991px) {
+    .main-title {
+        font-size: 1.2em;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
 .main-section {
     background: #fff;
     margin-bottom: $gap;
     border-radius: 1px;
-}
-.main-title {
-    font-size: 1.3em;
-    font-weight: 500;
-    padding: 13px 16px;
-    margin: 0;
-    text-transform: uppercase;
+    .main-title {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
 }
 
 .list-categories {
@@ -175,6 +211,13 @@ main {
                 color: $primary;
                 box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
             }
+        }
+    }
+}
+@media (max-width: 991px) {
+    .list-categories {
+        .grid-board {
+            grid-template-columns: repeat(4, 1fr);
         }
     }
 }
@@ -212,6 +255,9 @@ main {
                 height: 200px;
                 object-fit: cover;
                 margin-bottom: 10px;
+                @media (max-width: 991px) {
+                    height: 150px;
+                }
             }
             .title {
                 font-weight: normal;
@@ -292,26 +338,29 @@ footer {
 }
 
 .single-product {
-    .quantity-wrapper {
-        input, button {
-            border: 1px solid $light-border;
-            width: 35px;
-            height: 35px;
-            line-height: 1;
-            background: #fff;
-        }
-        button:active {
-            background: $gray-200;
-        }
-    }
-    #quantity {
-        width: 50px;
-    }
     .add-to-cart {
         padding: 8px 15px;
         font-size: 1.1em;
     }
 }
+.quantity-wrapper {
+    input, button {
+        border: 1px solid $light-border;
+        height: 35px;
+        line-height: 1;
+        background: #fff;
+    }
+    button {
+        width: 35px;
+        &:active {
+            background: $gray-200;
+        }
+    }
+    input {
+        width: 54px;
+    }
+}
+
 /* Ẩn cho Chrome, Safari, Edge, Opera */
 .no-spinners::-webkit-outer-spin-button,
 .no-spinners::-webkit-inner-spin-button {
@@ -322,13 +371,6 @@ footer {
 /* Ẩn cho Firefox */
 .no-spinners {
     -moz-appearance: textfield;
-}
-
-/* Tùy chỉnh thêm để input trông đẹp hơn */
-#quantity {
-    border-left: none;
-    border-right: none;
-    box-shadow: none; /* Bỏ viền xanh khi click vào */
 }
 
 .flying-img {
@@ -353,3 +395,4 @@ footer {
     animation: cart-shake 0.4s ease-in-out;
     color: $red-100; /* Có thể đổi màu icon nhẹ khi rung để gây chú ý */
 }
+

@@ -37,21 +37,11 @@
                     {!! $product->description !!}
                 </div>
 
-                <div class="quantity-wrapper d-flex align-items-center my-3">
-                    <label class="me-5">Số lượng</label>
-                    <div class="d-flex">
-                        <button class="" type="button" id="btn-minus">
-                            <i class="fas fa-minus"></i>
-                        </button>
+                <div class="d-flex align-items-center my-3">
+                    <div class="me-5 text-nowrap">Số lượng</div>
 
-                        <input type="number" id="quantity"
-                               class="form-control text-center no-spinners" value="1" min="1"
-                               oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                    @include('partials.product-quantity')
 
-                        <button class="" type="button" id="btn-plus">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
                 </div>
                 <button class="btn btn-primary add-to-cart" id="add-to-cart" data-id="{{ $product->id }}"
                 data-url="{{ route('cart.add') }}">
@@ -61,4 +51,8 @@
         </div>
 
     </div>
+@endsection
+
+@section('scripts')
+    @vite(['resources/js/product.js'])
 @endsection

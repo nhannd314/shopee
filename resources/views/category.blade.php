@@ -17,6 +17,9 @@
                     <p>Chưa có sản phẩm.</p>
                 @endforelse
             </div>
+            <div class="d-flex justify-content-center">
+                {{ $products->links() }}
+            </div>
         </div>
     </div>
 @endsection

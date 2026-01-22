@@ -7,7 +7,7 @@
                         <p>
                             <img src="{{ asset('img/logo-kmax-red.png') }}" alt="Logo siêu thị KMax" class="logo" style="max-width: 150px">
                         </p>
-                        <p>
+                        <!--<p>
                             Siêu thị mini - cửa hàng tiện ích KMax<br>
                             Số giấy phép DKKD: ...<br>
                             Cấp ngày ... tại ...<br>
@@ -15,51 +15,30 @@
                             Hotline: <a href="tel:0979198880">097-919-8880</a> | <a href="tel:0888112626">0888-11-2626</a><br>
                             Facebook: <a href="https://www.facebook.com/sieuthikmax" target="_blank" rel="nofollow">Siêu thị KMax</a><br>
                             Website: <a href="https://www.kmax.com.vn" target="_blank" rel="nofollow">https://kmax.com.vn</a>
-                        </p>
+                        </p>-->
+                        <p>{!! settings()->footer_text !!}</p>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="widget">
-                        <h4 class="title">DỊCH VỤ KHÁCH HÀNG</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Hướng dẫn mua hàng/đặt hàng</a></li>
-                            <li><a href="#">Hướng dẫn đổi trả hàng</a></li>
-                            <li><a href="#">Điều khoản KMax</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Chính sách đổi trả hàng</a></li>
-                            <li><a href="#">Liên hệ nhập hàng</a></li>
-                            <li><a href="#">Trung tâm trợ giúp</a></li>
-                        </ul>
+
+                @for ($i=1;$i<4;$i++)
+                    <div class="col-md-3 col-sm-6">
+                        <div class="widget">
+                            @php
+                                $menuKey = "footer_menu_{$i}";
+                                $footer_menu = settings()->$menuKey
+                            @endphp
+                            <h4 class="title">{{ $footer_menu['menu_title'] }}</h4>
+                            <ul class="footer-links">
+
+                                @foreach ($footer_menu['items'] as $item)
+                                    <li><a href="{{ $item['link'] }}">{{ $item['text'] }}</a></li>
+                                @endforeach
+
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="widget">
-                        <h4 class="title">DỊCH VỤ KHÁCH HÀNG</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Hướng dẫn mua hàng/đặt hàng</a></li>
-                            <li><a href="#">Hướng dẫn đổi trả hàng</a></li>
-                            <li><a href="#">Điều khoản KMax</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Chính sách đổi trả hàng</a></li>
-                            <li><a href="#">Liên hệ nhập hàng</a></li>
-                            <li><a href="#">Trung tâm trợ giúp</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="widget">
-                        <h4 class="title">DỊCH VỤ KHÁCH HÀNG</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">Hướng dẫn mua hàng/đặt hàng</a></li>
-                            <li><a href="#">Hướng dẫn đổi trả hàng</a></li>
-                            <li><a href="#">Điều khoản KMax</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Chính sách đổi trả hàng</a></li>
-                            <li><a href="#">Liên hệ nhập hàng</a></li>
-                            <li><a href="#">Trung tâm trợ giúp</a></li>
-                        </ul>
-                    </div>
-                </div>
+                @endfor
+
             </div>
         </div>
     </div>

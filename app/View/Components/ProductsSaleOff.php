@@ -27,6 +27,7 @@ class ProductsSaleOff extends Component
             ->whereColumn('price', '>', 'sale_price')
             ->take($this->limit)
             ->get();
+
         return view('components.products', [
             'products' => $products,
             'title' => 'Sản phẩm đang khuyến mại'

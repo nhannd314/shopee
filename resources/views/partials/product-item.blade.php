@@ -1,6 +1,6 @@
-<div class="item col-md-2 d-flex align-items-stretch">
+<div class="item col-6 col-md-2 d-flex align-items-stretch">
     <div class="wrapper product-wrapper d-flex flex-column">
-        <a href="{{ route('product', $product) }}" target="_blank">
+        <a href="{{ route('product', $product) }}">
             <div class="img-wrapper">
                 <img src="{{ $product->featured_image }}" alt="{{ $product->name }}">
                 @if ($product->sale_percent)

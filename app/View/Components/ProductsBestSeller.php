@@ -22,7 +22,10 @@ class ProductsBestSeller extends Component
      */
     public function render(): View|Closure|string
     {
-        $products = Product::orderByDesc('sold_count')->with('featuredImage')->take($this->limit)->get();
+        $products = Product::orderByDesc('sold_count')
+            ->with('featuredImage')
+            ->take($this->limit)
+            ->get();
         return view('components.products', [
             'products' => $products,
             'title' => 'Sản phẩm bán chạy nhất'
